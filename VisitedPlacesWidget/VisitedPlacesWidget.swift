@@ -1,7 +1,7 @@
-import WidgetKit
-import SwiftUI
 import Firebase
 import FirebaseAuth
+import SwiftUI
+import WidgetKit
 
 // Define the data model
 struct VisitedPlace: Identifiable {
@@ -12,18 +12,18 @@ struct VisitedPlace: Identifiable {
 
 struct Provider: TimelineProvider {
     // Placeholder data for the widget
-    func placeholder(in context: Context) -> SimpleEntry {
+    func placeholder(in _: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), visitedPlaces: [VisitedPlace(id: "1", name: "Coffee Shop", visits: 5), VisitedPlace(id: "2", name: "Gym", visits: 3)])
     }
 
     // Fetching snapshot data (will be used to display widget during development)
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in _: Context, completion: @escaping (SimpleEntry) -> Void) {
         let sampleData = [VisitedPlace(id: "1", name: "Coffee Shop", visits: 5), VisitedPlace(id: "2", name: "Gym", visits: 3)]
         completion(SimpleEntry(date: Date(), visitedPlaces: sampleData))
     }
 
     // Fetching data from Firebase for the widget timeline
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid)
             .getDocument { document, error in
                 if let document = document, document.exists {

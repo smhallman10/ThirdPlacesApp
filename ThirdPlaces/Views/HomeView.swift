@@ -43,9 +43,8 @@ struct HomeView: View {
                                     }
 
                                     // Optional debug print
-                                    print("✅ Checked into \(realPlace.name) — Visits: \(updatedVisits)")
+                                    print("checked into \(realPlace.name) — Visits: \(updatedVisits)")
                                 }
-
 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     checkInAnimation = false

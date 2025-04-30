@@ -5,7 +5,6 @@
 //  Created by William Hallman on 4/28/25.
 //
 
-
 import Foundation
 
 struct LeaderboardEntry: Identifiable {

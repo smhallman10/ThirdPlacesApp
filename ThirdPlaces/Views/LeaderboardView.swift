@@ -1,16 +1,16 @@
-import SwiftUI
 import FirebaseAuth
+import SwiftUI
 
 struct LeaderboardView: View {
     @ObservedObject var viewModel: UserViewModel
-    
+
     var body: some View {
         NavigationView {
             List {
                 if let profile = viewModel.userProfile {
                     Section(header: Text("Regular Status")) {
                         let regularPlaces = viewModel.userProfile?.visitedPlaces.filter { $0.visits >= 3 } ?? []
-                        
+
                         if regularPlaces.isEmpty {
                             Text("No regular spots yet.")
                                 .foregroundColor(.gray)
@@ -61,7 +61,7 @@ struct LeaderboardView: View {
             .navigationTitle("History")
         }
     }
-    
+
     func delete(place: VisitedPlace) async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         var profile = viewModel.userProfile ?? UserProfile(id: uid, username: "Guest", visitedPlaces: [])

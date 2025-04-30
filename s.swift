@@ -1,30 +1,25 @@
 //
-//  VistedPlaceEntity+CoreDataProperties.swift
+//  s.swift
 //  ThirdPlaces
 //
 //  Created by William Hallman on 4/29/25.
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension VistedPlaceEntity {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<VistedPlaceEntity> {
+public extension VistedPlaceEntity {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<VistedPlaceEntity> {
         return NSFetchRequest<VistedPlaceEntity>(entityName: "VistedPlaceEntity")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
-    @NSManaged public var latitude: Double
-    @NSManaged public var longitude: Double
-    @NSManaged public var visits: Int16
-    @NSManaged public var lastVIsited: Date?
-
+    @NSManaged var id: String?
+    @NSManaged var name: String?
+    @NSManaged var latitude: Double
+    @NSManaged var longitude: Double
+    @NSManaged var visits: Int16
+    @NSManaged var lastVIsited: Date?
 }
 
-extension VistedPlaceEntity : Identifiable {
-
-}
+extension VistedPlaceEntity: Identifiable {}

@@ -1,17 +1,17 @@
+import CoreLocation
 import Firebase
 import FirebaseAuth
-import FirebaseStorage
 import FirebaseFirestore
-import CoreLocation
+import FirebaseStorage
 
 @MainActor
 class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var userProfile: UserProfile?
     @Published var location: CLLocation?
-    
+
     private var db = Firestore.firestore()
     private var locationManager = CLLocationManager()
-    
+
     override init() {
         super.init()
         locationManager.delegate = self
@@ -19,7 +19,7 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         Task { await authenticateUser() }
     }
-    
+
     func authenticateUser() async {
         do {
             let result = try await Auth.auth().signInAnonymously()
@@ -28,23 +28,23 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("Authentication error: \(error.localizedDescription)")
         }
     }
-    
+
     func fetchUserProfile(userId: String) async {
         let docRef = db.collection("users").document(userId)
         do {
             let snapshot = try await docRef.getDocument()
             if snapshot.exists {
-                self.userProfile = try snapshot.data(as: UserProfile.self)
+                userProfile = try snapshot.data(as: UserProfile.self)
             } else {
                 let newProfile = UserProfile(id: userId, username: "Guest", visitedPlaces: [])
-                self.userProfile = newProfile
+                userProfile = newProfile
                 try docRef.setData(from: newProfile)
             }
         } catch {
             print("Error fetching user profile: \(error.localizedDescription)")
         }
     }
-    
+
     func updateUserProfile(
         username: String,
         visitedPlaces: [VisitedPlace],
@@ -65,7 +65,7 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         do {
             try db.collection("users").document(uid).setData(from: profile)
-            self.userProfile = profile
+            userProfile = profile
         } catch {
             print("Error updating user profile: \(error.localizedDescription)")
         }
@@ -74,7 +74,7 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func logVisit(to place: VisitedPlace) async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         var profile = userProfile ?? UserProfile(id: uid, username: "Guest", visitedPlaces: [])
-        
+
         if let index = profile.visitedPlaces.firstIndex(where: { $0.id == place.id }) {
             profile.visitedPlaces[index].visits += 1
             profile.visitedPlaces[index].lastVisited = Date()
@@ -84,10 +84,10 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             newPlace.lastVisited = Date()
             profile.visitedPlaces.append(newPlace)
         }
-        
+
         do {
             try db.collection("users").document(uid).setData(from: profile)
-            self.userProfile = profile
+            userProfile = profile
         } catch {
             print("Error saving profile: \(error.localizedDescription)")
         }
@@ -103,7 +103,7 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         do {
             try db.collection("users").document(uid).setData(from: profile)
-            self.userProfile = profile
+            userProfile = profile
             await fetchUserProfile(userId: uid)
         } catch {
             print("Error resetting visits: \(error.localizedDescription)")
@@ -113,15 +113,15 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func deleteVisitedPlace(_ place: VisitedPlace) async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         var profile = userProfile ?? UserProfile(id: uid, username: "Guest", visitedPlaces: [])
-        
+
         profile.visitedPlaces.removeAll { $0.id == place.id }
 
         do {
             try db.collection("users").document(uid).setData(from: profile)
-            self.userProfile = profile
-            print("🗑️ Deleted place: \(place.name)")
+            userProfile = profile
+
         } catch {
-            print("❌ Error deleting place: \(error.localizedDescription)")
+            print("Error deleting place: \(error.localizedDescription)")
         }
     }
 
@@ -140,7 +140,7 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func getNearbyPlaceName() async -> String {
         guard let location = location else {
-            print("❌ No location available")
+            print("No location available")
             return "Unknown Location"
         }
 
@@ -150,19 +150,20 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let placemarks = try await geocoder.reverseGeocodeLocation(location)
             if let place = placemarks.first {
                 if let name = place.name,
-                   !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: String(name.prefix(1)))) {
-                    print("🏢 Probably a business: \(name)")
+                   !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: String(name.prefix(1))))
+                {
+                    print("probably a business: \(name)")
                     return name
                 } else {
-                    print("🏠 Probably an address: \(place.name ?? "nil") — skipping")
+                    print("probably an address: \(place.name ?? "nil") — skipping")
                     return "Unnamed Establishment"
                 }
             } else {
-                print("⚠️ No placemarks found")
+                print("no placemarks found")
                 return "Unknown Location"
             }
         } catch {
-            print("❌ Geocoding failed: \(error.localizedDescription)")
+            print("geocoding failed: \(error.localizedDescription)")
             return "Unknown Location"
         }
     }
@@ -176,13 +177,13 @@ class UserViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             var profile = userProfile ?? UserProfile(id: uid, username: "Guest", visitedPlaces: [])
             profile.profileImageUrl = downloadURL.absoluteString
             try db.collection("users").document(uid).setData(from: profile)
-            self.userProfile = profile
+            userProfile = profile
         } catch {
             print("Failed to upload profile picture: \(error.localizedDescription)")
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let latest = locations.last else { return }
         location = latest
         print("📍 Location updated to: \(latest.coordinate.latitude), \(latest.coordinate.longitude)")

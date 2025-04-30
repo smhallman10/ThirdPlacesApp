@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct VisitedPlace: Codable, Identifiable {
     var id: String
     var name: String
@@ -35,6 +34,3 @@ struct Location: Codable {
     let lat: Double
     let lng: Double
 }
-
-
-
