@@ -25,13 +25,13 @@ Here are some screenshots of the most important screens of the app:
 # Screenshots
 
 
-   ![IMG_6829](VisitedPlacesWidget/Assets.xcassets/IMG_6829.PNG)
+   ![IMG_6829](VisitedPlacesWidget/IMG_6829.PNG)
 
 
-   ![IMG_6830](VisitedPlacesWidget/Assets.xcassets/IMG_6830.PNG)
+   ![IMG_6830](VisitedPlacesWidget/IMG_6830.PNG)
 
 
-   ![IMG_6831](VisitedPlacesWidget/Assets.xcassets/IMG_6831.PNG)
+   ![IMG_6831](VisitedPlacesWidget/IMG_6831.PNG)
 
 
    ![IMG_6834](ThirdPlaces/IMG_6834.PNG)
