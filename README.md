@@ -49,10 +49,7 @@ To run this app locally, follow these steps:
 Clone the repository to your local machine using the following command:
 
 git clone https://github.com/smhallman10/ThirdPlaces.git
-2. Install Dependencies
-Make sure you have CocoaPods installed to manage dependencies. Run:
 
-pod install
 3. Open the Project
 Open the .xcworkspace file in Xcode:
 
@@ -62,7 +59,7 @@ Run the app in Xcode’s simulator or on a real device to see the app in action!
 
 Contributing
 
-Contributions are welcome! If you have any suggestions or improvements, feel free to open an issue or submit a pull request.
+Contributions are welcome. If you have any suggestions or improvements, feel free to open an issue or submit a pull request.
 
 License
 
