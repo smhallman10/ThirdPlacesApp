@@ -22,8 +22,26 @@ Screenshots
 
 Here are some screenshots of the most important screens of the app:
 
-Home Screen: Displays the list of places visited by the user and tracks check-ins.
-Push Notification: Users are notified when they become a regular at a location.
+# Screenshots
+
+
+   ![IMG_6829](VisitedPlacesWidget/Assets.xcassets/IMG_6829.PNG)
+
+
+   ![IMG_6830](VisitedPlacesWidget/Assets.xcassets/IMG_6830.PNG)
+
+
+   ![IMG_6831](VisitedPlacesWidget/Assets.xcassets/IMG_6831.PNG)
+
+
+   ![IMG_6834](ThirdPlaces/IMG_6834.PNG)
+
+
+   ![IMG_6835](ThirdPlaces/IMG_6835.PNG)
+
+
+   ![IMG_6836](ThirdPlaces/IMG_6836.PNG)
+
 Installation & Setup
 
 To run this app locally, follow these steps:
