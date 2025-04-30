@@ -1,3 +1,10 @@
+//
+//  HomeView.swift
+//  ThirdPlaces
+//
+//  Created by William Hallman on 4/28/25.
+//
+
 import SwiftUI
 
 struct HomeView: View {
@@ -42,7 +49,7 @@ struct HomeView: View {
                                         }
                                     }
 
-                                    // Optional debug print
+                                 
                                     print("checked into \(realPlace.name) — Visits: \(updatedVisits)")
                                 }
 
@@ -95,7 +102,7 @@ struct HomeView: View {
             .overlay(
                 Group {
                     if showRegularPopup {
-                        Text("🎉 You're now a regular here!")
+                        Text("🎉 Youre now a regular here!")
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding()

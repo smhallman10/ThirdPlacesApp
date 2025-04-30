@@ -1,3 +1,10 @@
+//
+//  UserViewModel.swift
+//  ThirdPlaces
+//
+//  Created by William Hallman on 4/28/25.
+//
+
 import CoreLocation
 import Firebase
 import FirebaseAuth

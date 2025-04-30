@@ -1,3 +1,10 @@
+//
+//  ContentView.swift
+//  ThirdPlaces
+//
+//  Created by William Hallman on 4/28/25.
+//
+
 import SwiftUI
 
 struct ContentView: View {
